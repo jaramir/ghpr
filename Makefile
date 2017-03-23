@@ -1,14 +1,8 @@
-build:
-	docker build -t jaramir/spoke .
+nodemon: node_modules
+	npm run nodemon
 
-run:
-	docker run -it -p 3000:3000 jaramir/spoke
-
-publish:
-	docker push jaramir/spoke
+start: node_modules
+	npm start
 
 node_modules:
-	yarn
-
-run-local: node_modules
-	npm start
+		yarn

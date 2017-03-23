@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A spoke is one of some number of rods radiating from the center of a wheel (the hub where the axle connects), connecting the hub with the round traction surface. -- Wikipedia",
   "scripts": {
-    "start": "nodemon server.js",
+    "nodemon": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,5 +1,5 @@
 const express = require('express');
-const client_secret = require('./secrets').client_secret;
+const client_secret = process.env.CLIENT_SECRET;
 const client_id = '961e6abf281bd56388ff'
 const request = require('request');
 
