@@ -73,7 +73,7 @@ function fetch_pull_requests (owner, repo) {
         avatar.attr('src', pull.user.avatar_url)
 
         var link = $('<a />')
-        link.attr('href', pull.url)
+        link.attr('href', pull.html_url)
         link.attr('target', '_blank')
         link.text(pull.title)
 

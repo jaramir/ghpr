@@ -1,8 +1,8 @@
 nodemon: node_modules
-	npm run nodemon
+	env PORT=3000 CLIENT_SECRET=test npm run nodemon
 
 start: node_modules
-	npm start
+	env PORT=3000 CLIENT_SECRET=test npm start
 
 node_modules:
 		yarn
