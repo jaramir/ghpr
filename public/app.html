@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 
 <style>
-.orgs div {
-  display: inline-block;
-  border: 1px solid blue;
-  padding: 1em;
+
+body {
+  background-color: #eee;
+  margin: 0;
+  padding: 0;
 }
-.teams div {
+
+div {
   display: inline-block;
-  border: 1px solid green;
-  padding: 1em;
+  border: 1px solid lightgrey;
+  padding: .5em;
+  margin: .5em;
+  background-color: white;
+  border-radius: 4px;
 }
+
 .pull-requests div {
-  border: 1px solid red;
-  padding: 1em;
+  display: block;
+  line-height: 50px;
 }
+
+.pull-requests img {
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.pull-requests a {
+  text-decoration: none;
+  color: #02779E;
+  vertical-align: middle;
+  padding-left: 1em;
+}
+
 </style>
 
-<div class="orgs"></div>
-<div class="teams"></div>
-<div class="pull-requests"></div>
+<span class="orgs"></span>
+<span class="teams"></span>
+<span class="pull-requests"></span>
 
 <script
   src="https://code.jquery.com/jquery-3.2.1.js"

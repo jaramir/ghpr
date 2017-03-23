@@ -69,8 +69,17 @@ function fetch_pull_requests (owner, repo) {
   $.ajax(base_url + '/repos/' + owner + '/' + repo + '/pulls')
     .done(function (data) {
       data.forEach(function (pull) {
-        var el = $('<div></div>')
-        el.text(pull.title)
+        var avatar = $('<img />')
+        avatar.attr('src', pull.user.avatar_url)
+
+        var link = $('<a />')
+        link.attr('href', pull.url)
+        link.attr('target', '_blank')
+        link.text(pull.title)
+
+        var el = $('<div />')
+        el.append(avatar)
+        el.append(link)
         $('.pull-requests').append(el)
       })
     })
