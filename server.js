@@ -1,26 +1,30 @@
-var StaticServer = require('static-server');
+const express = require('express');
+const client_secret = require('./secrets').client_secret;
+const client_id = '961e6abf281bd56388ff'
+const request = require('request');
 
-var server = new StaticServer({
-  rootPath: 'public',
-  port: 3000,
-  host: '0.0.0.0'
+const server = express();
+
+server.use('/', express.static(__dirname + '/public'));
+
+server.use('/oauth-callback', (req, res) => {
+  const code = req.query.code;
+
+  const options = {
+    url: 'https://github.com/login/oauth/access_token',
+    headers: {
+      'Accept': 'application/json'
+    },
+    form: {
+      client_id,
+      client_secret,
+      code
+    }
+  }
+
+  request.post(options, (err, response, body) => {
+    res.redirect('/app.html?' + JSON.parse(body).access_token)
+  })
 });
 
-server.start(function () {
-  console.log('Server listening to', server.port);
-});
-
-server.on('request', function (req, res) {
-  // req.path is the URL resource (file name) from server.rootPath
-  // req.elapsedTime returns a string of the request's elapsed time
-});
-
-server.on('response', function (req, res, err, file, stat) {
-  // res.status is the response status sent to the client
-  // res.headers are the headers sent
-  // err is any error message thrown
-  // file the file being served (may be null)
-  // stat the stat of the file being served (is null if file is null)
-
-  // NOTE: the response has already been sent at this point
-});
+server.listen(3000);

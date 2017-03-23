@@ -9,6 +9,6 @@ publish:
 
 node_modules:
 	yarn
-	
+
 run-local: node_modules
 	npm start
