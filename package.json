@@ -1,0 +1,21 @@
+{
+  "name": "spoke",
+  "version": "1.0.0",
+  "description": "Connects Hub with Rim",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaramir/spoke.git"
+  },
+  "author": "Francesco Gigli <jaramir@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaramir/spoke/issues"
+  },
+  "homepage": "https://github.com/jaramir/spoke#readme",
+  "dependencies": {
+    "static-server": "^2.0.4"
+  }
+}
