@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "A dashboard for a github team's pull requests",
   "scripts": {
-    "nodemon": "nodemon server.js",
-    "webpack": "webpack",
-    "heroku-postbuild": "npm run webpack -- -p"
+    "start": "node server.js",
+    "run": "nodemon server.js",
+    "build": "webpack",
+    "heroku-postbuild": "yarn webpack -- -p"
   },
   "repository": {
     "type": "git",
@@ -19,8 +20,10 @@
   "homepage": "https://github.com/jaramir/ghpr#readme",
   "dependencies": {
     "express": "^4.15.2",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
     "nodemon": "^1.11.0",
-    "request": "^2.81.0",
     "webpack": "^2.3.2"
   }
 }
