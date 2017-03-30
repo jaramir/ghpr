@@ -1,4 +1,5 @@
 var access_token = document.location.search.substr(1);
+
 $.ajaxSetup({
   accepts: {
     'github': 'application/vnd.github.v3+json'
@@ -10,10 +11,10 @@ $.ajaxSetup({
 var base_url = 'https://api.github.com';
 
 
-$(function() {
+$(() => {
   $.ajax(base_url + '/user/orgs')
-    .done(function (data) {
-      data.forEach(function (org) {
+    .done(data => {
+      data.forEach(org => {
         var el = $('<div></div>')
         el.text(org.login)
         el.data('id', org.login)
@@ -22,15 +23,15 @@ $(function() {
     })
 });
 
-$('.orgs').on('click', function (e) {
+$('.orgs').on('click', e => {
     var el = $(e.target)
     var id = el.data('id')
 
     $.ajax(base_url + '/orgs/' + id + '/teams')
-      .done(function (data) {
+      .done(data => {
         $('.orgs').empty()
 
-        data.forEach(function (team) {
+        data.forEach(team => {
           var el = $('<div></div>')
           el.text(team.name)
           el.data('id', team.id)
@@ -39,12 +40,12 @@ $('.orgs').on('click', function (e) {
       })
 });
 
-$('.teams').on('click', function (e) {
+$('.teams').on('click', e => {
     var el = $(e.target)
     var id = el.data('id')
 
     $.ajax(base_url + '/teams/' + id + '/repos')
-      .done(function (data) {
+      .done(data => {
         $('.teams').empty()
 
         setup_timer(data)
@@ -60,15 +61,15 @@ function update (repos) {
   console.log('updating..')
   $('.pull-requests').empty()
 
-  repos.forEach(function (repo) {
+  repos.forEach(repo => {
     fetch_pull_requests(repo.owner.login, repo.name)
   })
 }
 
 function fetch_pull_requests (owner, repo) {
   $.ajax(base_url + '/repos/' + owner + '/' + repo + '/pulls')
-    .done(function (data) {
-      data.forEach(function (pull) {
+    .done(data => {
+      data.forEach(pull => {
         var avatar = $('<img />')
         avatar.attr('src', pull.user.avatar_url)
 
