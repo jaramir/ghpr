@@ -1,87 +1,41 @@
-var access_token = document.location.search.substr(1);
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-$.ajaxSetup({
-  accepts: {
-    'github': 'application/vnd.github.v3+json'
-  },
-  headers: {
-    'Authorization': 'token ' + access_token
-  }
-});
-var base_url = 'https://api.github.com';
+const accessToken = document.location.search.substr(1);
+const baseUrl = 'https://api.github.com';
+const options = {
+    headers: {
+        'Authorization': 'token ' + accessToken,
+        'Accept': 'application/vnd.github.v3+json'
+    }
+};
 
+class OrgSelector extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            orgs: []
+        }
+    }
 
-$(() => {
-  $.ajax(base_url + '/user/orgs')
-    .done(data => {
-      data.forEach(org => {
-        var el = $('<div></div>')
-        el.text(org.login)
-        el.data('id', org.login)
-        $('.orgs').append(el)
-      })
-    })
-});
+    componentWillMount() {
+        fetch(baseUrl + '/user/orgs', options)
+            .then(reponse => reponse.json()
+                .then(orgs => this.setState({
+                    orgs
+                })))
+    }
 
-$('.orgs').on('click', e => {
-    var el = $(e.target)
-    var id = el.data('id')
-
-    $.ajax(base_url + '/orgs/' + id + '/teams')
-      .done(data => {
-        $('.orgs').empty()
-
-        data.forEach(team => {
-          var el = $('<div></div>')
-          el.text(team.name)
-          el.data('id', team.id)
-          $('.teams').append(el)
-        })
-      })
-});
-
-$('.teams').on('click', e => {
-    var el = $(e.target)
-    var id = el.data('id')
-
-    $.ajax(base_url + '/teams/' + id + '/repos')
-      .done(data => {
-        $('.teams').empty()
-
-        setup_timer(data)
-      })
-});
-
-function setup_timer (repos) {
-  setInterval(update, 5 * 60 * 1000, repos)
-  update(repos)
+    render() {
+        return <div>
+            {this.state.orgs.map(org =>
+                <div>{org.login}</div>
+            )}
+        </div>
+    }
 }
 
-function update (repos) {
-  console.log('updating..')
-  $('.pull-requests').empty()
-
-  repos.forEach(repo => {
-    fetch_pull_requests(repo.owner.login, repo.name)
-  })
-}
-
-function fetch_pull_requests (owner, repo) {
-  $.ajax(base_url + '/repos/' + owner + '/' + repo + '/pulls')
-    .done(data => {
-      data.forEach(pull => {
-        var avatar = $('<img />')
-        avatar.attr('src', pull.user.avatar_url)
-
-        var link = $('<a />')
-        link.attr('href', pull.html_url)
-        link.attr('target', '_blank')
-        link.text(pull.title)
-
-        var el = $('<div />')
-        el.append(avatar)
-        el.append(link)
-        $('.pull-requests').append(el)
-      })
-    })
-}
+ReactDOM.render(
+    <OrgSelector accessToken={accessToken}/>,
+    document.getElementById('root')
+);
