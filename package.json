@@ -6,7 +6,7 @@
     "start": "node server.js",
     "run": "nodemon server.js",
     "build": "webpack",
-    "heroku-postbuild": "npm run build -- -p"
+    "heroku-postbuild": "npm run build -- -p --display-error-details"
   },
   "repository": {
     "type": "git",
