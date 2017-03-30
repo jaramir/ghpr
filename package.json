@@ -1,7 +1,7 @@
 {
-  "name": "spoke",
+  "name": "ghpr",
   "version": "1.0.0",
-  "description": "A spoke is one of some number of rods radiating from the center of a wheel (the hub where the axle connects), connecting the hub with the round traction surface. -- Wikipedia",
+  "description": "A dashboard for a github team's pull requests",
   "scripts": {
     "nodemon": "nodemon server.js",
     "webpack": "webpack",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaramir/spoke.git"
+    "url": "git+https://github.com/jaramir/ghpr.git"
   },
   "author": "Francesco Gigli <jaramir@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jaramir/spoke/issues"
+    "url": "https://github.com/jaramir/ghpr/issues"
   },
-  "homepage": "https://github.com/jaramir/spoke#readme",
+  "homepage": "https://github.com/jaramir/ghpr#readme",
   "dependencies": {
     "express": "^4.15.2",
     "nodemon": "^1.11.0",
