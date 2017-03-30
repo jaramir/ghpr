@@ -1,8 +1,8 @@
-nodemon: node_modules
+nodemon: node_modules public/bundle.js
 	env PORT=3000 CLIENT_SECRET=test npm run nodemon
 
-start: node_modules
-	env PORT=3000 CLIENT_SECRET=test npm start
+public/bundle.js: node_modules
+	npm run webpack
 
 node_modules:
-		yarn
+	yarn

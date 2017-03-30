@@ -2,3 +2,5 @@
 node_modules
 *.log
 .idea
+public/bundle.js
+yarn.lock

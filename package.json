@@ -4,7 +4,8 @@
   "description": "A spoke is one of some number of rods radiating from the center of a wheel (the hub where the axle connects), connecting the hub with the round traction surface. -- Wikipedia",
   "scripts": {
     "nodemon": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "webpack",
+    "heroku-postbuild": "npm run webpack -- -p"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "nodemon": "^1.11.0",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "webpack": "^2.3.2"
   }
 }
