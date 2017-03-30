@@ -6,7 +6,7 @@
     "start": "node server.js",
     "run": "nodemon server.js",
     "build": "webpack",
-    "heroku-postbuild": "yarn webpack -- -p"
+    "heroku-postbuild": "npm run build -- -p"
   },
   "repository": {
     "type": "git",
