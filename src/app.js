@@ -10,37 +10,86 @@ const options = {
     }
 }
 
-class OrgSelector extends React.Component {
+const Selector = (props) => <div>
+    {props.options.map(option =>
+        <div style={{display: "inline-block"}} key={props.getId(option)}>
+            <button
+                style={{
+                    padding: ".5em",
+                    margin: ".5em",
+                    whiteSpace: "nowrap",
+                    fontSize: "large"
+                }}
+                onClick={() => props.onSelect(props.getId(option))}>
+                {props.getText(option)}
+            </button>
+        </div>
+    )}
+</div>
+
+const OrgSelector = (props) => <Selector
+    options={props.orgs}
+    getId={org => org.login}
+    getText={org => org.login}
+    onSelect={props.onOrgSelected}/>
+
+const TeamSelector = (props) => <Selector
+    options={props.teams}
+    getId={team => team.id}
+    getText={team => team.name}
+    onSelect={props.onTeamSelected}/>
+
+class Ghpr extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            orgs: []
+            orgs: [],
+            org: null,
+            teams: [],
+            team: null
         }
     }
 
     componentWillMount() {
         fetch(baseUrl + '/user/orgs', options)
             .then(reponse => reponse.json()
-                .then(orgs => this.setState({
-                    orgs
-                })))
+                .then(orgs => this.setState(Object.assign({}, this.state, {orgs}))))
+    }
+
+    onOrgSelected(login) {
+        this.setState(Object.assign({}, this.state, {org: login}))
+        fetch(baseUrl + '/orgs/' + login + '/teams', options)
+            .then(reponse => reponse.json()
+                .then(teams => this.setState(Object.assign({}, this.state, {teams}))))
+    }
+
+    onTeamSelected(id) {
+        this.setState(Object.assign({}, this.state, {team: id}))
     }
 
     render() {
-        return <div style={{flex: "1", display: "flex", flexDirection: "row"}}>
-            {this.state.orgs.map(org =>
-                <div key={org.login}>
-                    <button onClick={() => console.log(`selected org ${org.login}`)}>{org.login}</button>
-                </div>
-            )}
+        return <div>
+            { this.state.org === null &&
+                <OrgSelector
+                    orgs={this.state.orgs}
+                    onOrgSelected={this.onOrgSelected.bind(this)}/>
+            }
+            { this.state.org !== null && this.state.team === null &&
+                <TeamSelector
+                    teams={this.state.teams}
+                    onTeamSelected={this.onTeamSelected.bind(this)}/>
+            }
+            { this.state.org !== null && this.state.team !== null &&
+                <div>Dashboard!</div>
+            }
+            <div style={{position: "fixed", bottom: 0, textAlign: "center"}}>
+                Made with ❤️ by <a href="https://github.com/jaramir/ghpr">Jaramir</a>
+            </div>
         </div>
     }
 }
 
 ReactDOM.render(
-    <div style={{display: "flex", height: "100%", flexDirection: "column"}}>
-        <OrgSelector accessToken={accessToken} />
-        <div style={{textAlign: "center"}}>Made with ❤️ by <a href="https://github.com/jaramir/ghpr">Jaramir</a></div>
-    </div>,
+    <Ghpr />,
     document.getElementById('root')
 );
