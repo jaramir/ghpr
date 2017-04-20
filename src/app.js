@@ -39,6 +39,13 @@ const TeamSelector = (props) => <Selector
     getText={team => team.name}
     onSelect={props.onTeamSelected}/>
 
+function flatten(arrayOfArrays) {
+    return arrayOfArrays.reduce(
+        (acc, cur) => acc.concat(cur),
+        []
+    )
+}
+
 class Ghpr extends React.Component {
     constructor(props) {
         super(props)
@@ -47,7 +54,9 @@ class Ghpr extends React.Component {
             org: null,
             teams: [],
             team: null,
-            repos: []
+            repos: [],
+            pullRequests: [],
+            lastUpdated: null
         }
     }
 
@@ -78,14 +87,19 @@ class Ghpr extends React.Component {
     }
 
     setupTimer() {
-        setInterval(this.update.bind(this), 5 * 60 * 1000)
+        setInterval(this.update.bind(this), 5 * (60-59) * 1000)
     }
 
     update() {
-        this.state.repos.forEach(repo =>
-            fetch(`${baseUrl}/repos/${repo.owner.login}/${repo.name}/pulls`, options)
-                .then(reponse => reponse.json()
-                    .then(pullReq => pullReq.length > 0 && console.log(pullReq))))
+        Promise.all(
+            this.state.repos.map(repo =>
+                fetch(`${baseUrl}/repos/${repo.owner.login}/${repo.name}/pulls`, options)
+                    .then(response => response.json())))
+            .then(reponses => {
+                let pullRequests = flatten(reponses)
+                let lastUpdated = new Date()
+                this.setState(Object.assign({}, this.state, {pullRequests, lastUpdated}))
+            })
     }
 
     render() {
@@ -101,9 +115,19 @@ class Ghpr extends React.Component {
                     onTeamSelected={this.onTeamSelected.bind(this)}/>
             }
             { this.state.org !== null && this.state.team !== null &&
-                <div>Dashboard!</div>
+                this.state.pullRequests.map(pr =>
+                    <div>
+                        <img src={pr.user.avatar_url} style={{height: "50px", width: "50px"}}/>
+                        <a href={pr.html_url} target="_blank">{pr.title}</a>
+                    </div>
+                )
             }
-            <div style={{position: "fixed", bottom: 0, textAlign: "center"}}>
+            {this.state.lastUpdated &&
+                <div style={{position: "fixed", bottom: 0, left: "2px", fontSize: "small"}}>
+                    Last updated: {this.state.lastUpdated + ""}
+                </div>
+            }
+            <div style={{position: "fixed", bottom: 0, right: "2px", fontSize: "small"}}>
                 Made with ❤️ by <a href="https://github.com/jaramir/ghpr">Jaramir</a>
             </div>
         </div>
