@@ -46,7 +46,8 @@ class Ghpr extends React.Component {
             orgs: [],
             org: null,
             teams: [],
-            team: null
+            team: null,
+            repos: []
         }
     }
 
@@ -65,6 +66,26 @@ class Ghpr extends React.Component {
 
     onTeamSelected(id) {
         this.setState(Object.assign({}, this.state, {team: id}))
+
+        fetch(baseUrl + '/teams/' + id + '/repos', options)
+            .then(reponse => reponse.json()
+                .then(repos => {
+                    this.setState(Object.assign({}, this.state, {repos}))
+                    this.update()
+                    this.setupTimer()
+                }))
+
+    }
+
+    setupTimer() {
+        setInterval(this.update.bind(this), 5 * 60 * 1000)
+    }
+
+    update() {
+        this.state.repos.forEach(repo =>
+            fetch(`${baseUrl}/repos/${repo.owner.login}/${repo.name}/pulls`, options)
+                .then(reponse => reponse.json()
+                    .then(pullReq => pullReq.length > 0 && console.log(pullReq))))
     }
 
     render() {
