@@ -56,7 +56,6 @@ class Ghpr extends React.Component {
             team: null,
             repos: [],
             pullRequests: [],
-            lastUpdated: null
         }
     }
 
@@ -97,8 +96,7 @@ class Ghpr extends React.Component {
                     .then(response => response.json())))
             .then(reponses => {
                 let pullRequests = flatten(reponses)
-                let lastUpdated = new Date()
-                this.setState(Object.assign({}, this.state, {pullRequests, lastUpdated}))
+                this.setState(Object.assign({}, this.state, {pullRequests}))
             })
     }
 
@@ -116,20 +114,25 @@ class Ghpr extends React.Component {
             }
             { this.state.org !== null && this.state.team !== null &&
                 this.state.pullRequests.map(pr =>
-                    <div>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        border: "1px solid lightgrey",
+                        padding: ".5em",
+                        margin: ".5em",
+                        backgroundColor: "white",
+                        borderRadius: "4px"
+                    }}>
                         <img src={pr.user.avatar_url} style={{height: "50px", width: "50px"}}/>
-                        <a href={pr.html_url} target="_blank">{pr.title}</a>
+                        <a style={{
+                            textDecoration: "none",
+                            color: "#02779E",
+                            paddingLeft: ".5em"
+                        }} href={pr.html_url} target="_blank">{pr.title}</a>
                     </div>
                 )
             }
-            {this.state.lastUpdated &&
-                <div style={{position: "fixed", bottom: 0, left: "2px", fontSize: "small"}}>
-                    Last updated: {this.state.lastUpdated + ""}
-                </div>
-            }
-            <div style={{position: "fixed", bottom: 0, right: "2px", fontSize: "small"}}>
-                Made with ❤️ by <a href="https://github.com/jaramir/ghpr">Jaramir</a>
-            </div>
         </div>
     }
 }
