@@ -86,7 +86,7 @@ class Ghpr extends React.Component {
     }
 
     setupTimer() {
-        setInterval(this.update.bind(this), 5 * (60-59) * 1000)
+        setInterval(this.update.bind(this), 5 * 60 * 1000)
     }
 
     update() {
