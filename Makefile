@@ -1,6 +1,8 @@
-run: node_modules
-	yarn build -- --watch &
-	env PORT=3000 CLIENT_SECRET=test yarn run run
+dev: node_modules
+	yarn dev
+
+prod: public/bundle.js
+	env PORT=8080 CLIENT_SECRET=test yarn start
 
 public/bundle.js: node_modules
 	yarn build
