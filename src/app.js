@@ -114,22 +114,15 @@ class Ghpr extends React.Component {
             }
             { this.state.org !== null && this.state.team !== null &&
                 this.state.pullRequests.map(pr =>
-                    <div style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        border: "1px solid lightgrey",
-                        padding: ".5em",
-                        margin: ".5em",
-                        backgroundColor: "white",
-                        borderRadius: "4px"
-                    }}>
-                        <img src={pr.user.avatar_url} style={{height: "50px", width: "50px"}}/>
-                        <a style={{
-                            textDecoration: "none",
-                            color: "#02779E",
-                            paddingLeft: ".5em"
-                        }} href={pr.html_url} target="_blank">{pr.title}</a>
+                    <div style={{display: "flex", flexDirection: "row", alignItems: "center",
+                        border: "1px solid lightgrey", borderRadius: "4px",
+                        margin: ".5em", backgroundColor: "white"}}>
+                        <img src={pr.user.avatar_url} style={{height: "50px", width: "50px", margin: ".5em"}}/>
+                        <div style={{display: "flex", flexDirection: "column"}}>
+                            <a style={{textDecoration: "none", color: "#02779E"}}
+                                href={pr.html_url} target="_blank">{pr.title}</a>
+                            <span style={{color: "#333", fontSize: "small"}}>{pr.base.repo.full_name}</span>
+                        </div>
                     </div>
                 )
             }
