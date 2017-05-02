@@ -75,7 +75,7 @@ class Ghpr extends React.Component {
     onTeamSelected(id) {
         this.setState(Object.assign({}, this.state, {team: id}))
 
-        fetch(baseUrl + '/teams/' + id + '/repos', options)
+        fetch(baseUrl + '/teams/' + id + '/repos?per_page=100', options)
             .then(reponse => reponse.json()
                 .then(repos => {
                     this.setState(Object.assign({}, this.state, {repos}))
