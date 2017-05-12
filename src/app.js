@@ -91,7 +91,9 @@ class Ghpr extends React.Component {
 
     update() {
         Promise.all(
-            this.state.repos.map(repo =>
+            this.state.repos
+            .filter(repo => repo.permissions.admin)
+            .map(repo =>
                 fetch(`${baseUrl}/repos/${repo.owner.login}/${repo.name}/pulls`, options)
                     .then(response => response.json())))
             .then(reponses => {
