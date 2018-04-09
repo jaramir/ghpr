@@ -83,7 +83,7 @@ class Ghpr extends React.Component {
     }
 
     update() {
-        fetch(baseUrl + '/teams/' + this.state.team + '/repos?per_page=1000', options)
+        fetch(baseUrl + '/teams/' + this.state.team + '/repos?per_page=100', options)
             .then(reponse => reponse.json())
             .then(repos =>
                 Promise.all(repos
