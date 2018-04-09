@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import parseLink from 'parse-link-header'
+import flatten from 'array-flatten'
 
 const accessToken = document.location.search.substr(1)
 const baseUrl = 'https://api.github.com'
@@ -39,13 +41,6 @@ const TeamSelector = (props) => <Selector
     getText={team => team.name}
     onSelect={props.onTeamSelected}/>
 
-function flatten(arrayOfArrays) {
-    return arrayOfArrays.reduce(
-        (acc, cur) => acc.concat(cur),
-        []
-    )
-}
-
 class Ghpr extends React.Component {
     constructor(props) {
         super(props)
@@ -82,9 +77,26 @@ class Ghpr extends React.Component {
         setInterval(this.update.bind(this), 5 * 60 * 1000)
     }
 
+    teamRepos() {
+      function fetchPage (url) {
+        return fetch(url, options)
+          .then(response => {
+            const next = parseLink(response.headers.get("Link")).next
+
+            if (next) {
+              return Promise.all([response.json(), fetchPage(next.url)])
+            } else {
+              return response.json()
+            }
+          })
+      }
+
+      return fetchPage(baseUrl + '/teams/' + this.state.team + '/repos?per_page=50')
+        .then(response => flatten(response))
+    }
+
     update() {
-        fetch(baseUrl + '/teams/' + this.state.team + '/repos?per_page=100', options)
-            .then(reponse => reponse.json())
+        this.teamRepos()
             .then(repos =>
                 Promise.all(repos
                     .filter(repo => repo.permissions.admin)
