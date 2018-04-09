@@ -10,5 +10,10 @@ module.exports = {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
     ]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "public"),
+    compress: true,
+    port: 3000
   }
 };

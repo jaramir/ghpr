@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "run": "nodemon server.js",
+    "dev": "webpack-dev-server",
     "build": "webpack",
     "heroku-postbuild": "npm run build -- -p --display-error-details"
   },
