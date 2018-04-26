@@ -52,6 +52,7 @@ class Ghpr extends React.Component {
             repos: [],
             pullRequests: [],
         }
+        this.update = this.update.bind(this)
     }
 
     componentWillMount() {
@@ -135,6 +136,9 @@ class Ghpr extends React.Component {
                         </div>
                     </div>
                 )
+            }
+            { this.state.org !== null && this.state.team !== null &&
+              <button style={{margin: "1em", padding: ".5em"}} onClick={this.update}>Update now</button>
             }
         </div>
     }
