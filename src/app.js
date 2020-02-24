@@ -104,9 +104,9 @@ class Ghpr extends React.Component {
                     .map(repo =>
                         fetch(`${baseUrl}/repos/${repo.owner.login}/${repo.name}/pulls`, options)
                             .then(response => response.json())))
-                    .then(reponses => {
+                     .then(reponses => {
                         let pullRequests = flatten(reponses)
-                        this.setState(Object.assign({}, this.state, {pullRequests}))
+                       this.setState(Object.assign({}, this.state, {pullRequests}))
                     }))
     }
 
@@ -133,6 +133,7 @@ class Ghpr extends React.Component {
                             <a style={{textDecoration: "none", color: "#02779E"}}
                                 href={pr.html_url} target="_blank">{pr.title}</a>
                             <span style={{color: "#333", fontSize: "small"}}>{pr.base.repo.full_name}</span>
+                            <span style={{color: "#333", fontSize: "small"}}>{pr.created_at}</span>
                         </div>
                     </div>
                 )
