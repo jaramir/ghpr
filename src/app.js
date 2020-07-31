@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import parseLink from 'parse-link-header'
-import flatten from 'array-flatten'
+import { flatten } from 'array-flatten'
 
 const accessToken = document.location.search.substr(1)
 const baseUrl = 'https://api.github.com'
