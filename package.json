@@ -21,7 +21,7 @@
   "homepage": "https://github.com/jaramir/ghpr#readme",
   "dependencies": {
     "array-flatten": "2.1.2",
-    "express": "4.16.3",
+    "express": "4.17.1",
     "parse-link-header": "1.0.1",
     "react": "15.6.2",
     "react-dom": "15.6.2",
