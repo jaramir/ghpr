@@ -24,8 +24,8 @@
     "express": "4.17.1",
     "node-fetch": "2.6.0",
     "parse-link-header": "1.0.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.11.1",
